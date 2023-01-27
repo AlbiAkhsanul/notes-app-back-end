@@ -55,23 +55,23 @@ const getNoteByIdHandler = (request, h) => {
     const note = notes.filter((n) => n.id === id)[0];
 
     if (note !== undefined) {
-        return {
-          status: 'success',
-          data: {
-            note,
-          },
-        };
+      return {
+        status: 'success',
+        data: {
+          note,
+        },
+      };
 
     }else{
-        const response = h.response({
-            status: 'fail',
-          message: 'Catatan tidak ditemukan',
-        });
+      const response = h.response({
+          status: 'fail',
+        message: 'Catatan tidak ditemukan',
+      });
 
+      response.code(404);
+      return response;
     }
 
-    response.code(404);
-    return response;
 };
 
 //Mengedit Data
@@ -84,28 +84,27 @@ const editNoteByIdHandler = (request, h) => {
     const index = notes.findIndex((note) => note.id === id);
    
     if (index !== -1) {
-        notes[index] = {
-          ...notes[index],
-          title,
-          tags,
-          body,
-          updatedAt,
-        };
-
-        const response = h.response({
-          status: 'success',
-          message: 'Catatan berhasil diperbarui',
-        });
-        response.code(200);
-        return response;
+      notes[index] = {
+        ...notes[index],
+        title,
+        tags,
+        body,
+        updatedAt,
+      };
+      const response = h.response({
+        status: 'success',
+        message: 'Catatan berhasil diperbarui',
+      });
+      response.code(200);
+      return response;
 
     }else{
-        const response = h.response({
-          status: 'fail',
-          message: 'Gagal memperbarui catatan. Id tidak ditemukan',
-        });
-        response.code(404);
-        return response;
+      const response = h.response({
+        status: 'fail',
+        message: 'Gagal memperbarui catatan. Id tidak ditemukan',
+      });
+      response.code(404);
+      return response;
     }
 };
 
